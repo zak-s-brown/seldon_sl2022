@@ -1,20 +1,53 @@
-import spacy
+from transformers import AutoModelForSequenceClassification
+from transformers import TFAutoModelForSequenceClassification
+from transformers import AutoTokenizer
+import numpy as np
+from scipy.special import softmax
+import csv
 import logging
+import os
+import urllib
+
+# Preprocess text (username and link placeholders)
+def preprocess(text):
+    new_text = []
+ 
+ 
+    for t in text.split(" "):
+        t = '@user' if t.startswith('@') and len(t) > 1 else t
+        t = 'http' if t.startswith('http') else t
+        new_text.append(t)
+    return " ".join(new_text)
 
 logger = logging.getLogger(__name__)
 
 class Sentiment():
     
-    def __init__(self, 
-                 classes=['PERSON', 'ORG']
-                ): 
-        
-        #self.nlp = spacy.load('en_core_web_md')
-        self.classes = set(classes)
+    def __init__(self): 
+
+        # Tasks:
+        # emoji, emotion, hate, irony, offensive, sentiment
+        # stance/abortion, stance/atheism, stance/climate, stance/feminist, stance/hillary
+
+        self.task = os.environ.get('TASK', 'sentiment')
+        self.MODEL = f"cardiffnlp/twitter-roberta-base-{self.task}"
+
+        self.mapping_link = f"https://raw.githubusercontent.com/cardiffnlp/tweeteval/main/datasets/{self.task}/mapping.txt"
 
     def load(self):
         logger.warning("loading model")
-        self.nlp = spacy.load('en_core_web_md')
+        # download label mapping
+        labels=[]
+        with urllib.request.urlopen(self.mapping_link) as f:
+            html = f.read().decode('utf-8').split("\n")
+            csvreader = csv.reader(html, delimiter='\t')
+        labels = [row[1] for row in csvreader if len(row) > 1]
+
+        # PT
+        self.model = AutoModelForSequenceClassification.from_pretrained(self.MODEL)
+        self.model.save_pretrained(self.MODEL)
+
+        self.tokenizer = AutoTokenizer.from_pretrained(self.MODEL)
         
     def identify(self, text):
         doc = self.nlp(text)
@@ -47,15 +80,13 @@ class Sentiment():
 
     def predict(self, ndarray, feature_names):
         text = str(ndarray[0])
-        scrubbed = text
-        ents = self.identify(text)
-        
-        if ents:
-            scrubbed = self.scrub(text, ents)
-
+        text = preprocess(text)
+        encoded_input = self.tokenizer(text, return_tensors='pt')
+        output = self.model(**encoded_input)
+        scores = output[0][0].detach().numpy()
+        scores = softmax(scores)
         
         return {
-            "scrubbed": scrubbed,
-            "ents": ents
+            "scores": scores
         }
         

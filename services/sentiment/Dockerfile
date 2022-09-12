@@ -5,7 +5,6 @@ WORKDIR /app
 
 RUN pip install --use-deprecated=legacy-resolver -r requirements.txt
 
-RUN python -m spacy download en_core_web_md
 # Port for GRPC
 EXPOSE 5000
 # Port for REST
