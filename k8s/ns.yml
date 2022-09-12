@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: seldon-models
+  labels:
+    istio-injection:
+      enabled

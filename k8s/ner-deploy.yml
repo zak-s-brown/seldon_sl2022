@@ -1,0 +1,36 @@
+apiVersion: machinelearning.seldon.io/v1
+kind: SeldonDeployment
+metadata:
+  name: ner
+spec:
+  name: ner
+  predictors:
+  - annotations:
+      seldon.io/no-engine: "true"
+      sidecar.istio.io/proxyCPULimit: "300m"
+      sidecar.istio.io/proxyMemoryLimit: "300Mi"
+    componentSpecs:
+    - spec:
+        terminationGracePeriodSeconds: 60
+        containers:
+        - name: ner
+          image: localhost:5001/ner:latest
+          imagePullPolicy: Always
+          env:
+            - name: SELDON_LOG_LEVEL
+              value: 'WARNING'
+            - name: SELDON_DEBUG
+              value: 'true'
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1000Mi
+              cpu: 1000m
+              memory: 1000Mi
+    graph:
+      children: []
+      endpoint:
+        type: REST
+      name: ner
+      type: MODEL
+    name: ner

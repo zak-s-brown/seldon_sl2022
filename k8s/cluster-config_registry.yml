@@ -1,0 +1,28 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+containerdConfigPatches:
+- |-
+  [plugins."io.containerd.grpc.v1.cri".registry.mirrors."localhost:5001"]
+    endpoint = ["http://kind-registry:5000"]
+name: seldon
+nodes:
+- role: control-plane
+  kubeadmConfigPatches:
+  - |
+    kind: InitConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "ingress-ready=true"
+  extraPortMappings:
+  - containerPort: 30214
+    hostPort: 80
+    protocol: TCP
+  - containerPort: 31723
+    hostPort: 443
+    protocol: TCP
+- role: worker
+  image: kindest/node:v1.21.12
+- role: worker
+  image: kindest/node:v1.21.12
+
+
