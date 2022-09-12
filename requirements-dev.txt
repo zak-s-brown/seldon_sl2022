@@ -1,0 +1,15 @@
+transformers
+spacy
+jupyter
+pandas
+seldon-core
+Flask
+spacy
+requests
+tqdm
+sklearn
+tokenizers
+torch
+tqdm
+onnx
+onnxruntime
