@@ -4,3 +4,5 @@ spacy
 requests
 tqdm
 click
+transformers
+scipy
