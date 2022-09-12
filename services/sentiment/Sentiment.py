@@ -28,9 +28,10 @@ class Sentiment():
         # Tasks:
         # emoji, emotion, hate, irony, offensive, sentiment
         # stance/abortion, stance/atheism, stance/climate, stance/feminist, stance/hillary
-
-        self.task = os.environ.get('TASK', 'sentiment')
-        self.MODEL = f"cardiffnlp/twitter-roberta-base-{self.task}"
+        self.task = 'sentiment'
+        self.MODEL = os.environ.get('MODEL', 'cardiffnlp/twitter-roberta-base-sentiment')
+        self.TOKENIZER = os.environ.get('TOKENIZER', 'cardiffnlp/twitter-roberta-base-sentiment-latest')
+        logger.warning(self.MODEL)
 
         self.mapping_link = f"https://raw.githubusercontent.com/cardiffnlp/tweeteval/main/datasets/{self.task}/mapping.txt"
 
@@ -44,10 +45,10 @@ class Sentiment():
         labels = [row[1] for row in csvreader if len(row) > 1]
 
         # PT
-        self.model = AutoModelForSequenceClassification.from_pretrained(self.MODEL)
-        self.model.save_pretrained(self.MODEL)
+        self.model = AutoModelForSequenceClassification.from_pretrained(self.MODEL, local_files_only=True)
+        #self.model.save_pretrained(self.MODEL)
 
-        self.tokenizer = AutoTokenizer.from_pretrained(self.MODEL)
+        self.tokenizer = AutoTokenizer.from_pretrained(self.TOKENIZER, local_files_only=True)
         
     def identify(self, text):
         doc = self.nlp(text)
@@ -84,7 +85,8 @@ class Sentiment():
         encoded_input = self.tokenizer(text, return_tensors='pt')
         output = self.model(**encoded_input)
         scores = output[0][0].detach().numpy()
-        scores = softmax(scores)
+        scores = softmax(scores).tolist()
+        
         
         return {
             "scores": scores

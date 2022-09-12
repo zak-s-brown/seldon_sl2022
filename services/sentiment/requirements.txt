@@ -6,3 +6,4 @@ tqdm
 click
 transformers
 scipy
+torch
