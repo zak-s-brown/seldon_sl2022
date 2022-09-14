@@ -23,9 +23,9 @@ class RPunct():
         text = str(ndarray[0])
         try:
             punctuated = self.model.punctuate(text)
-            meta['punctuation_success'] = True
+            #meta['punctuation_success'] = True
         except Exception as e:
-            meta['punctuation_success'] = False
+            #meta['punctuation_success'] = False
             punctuated = text
         return [punctuated]
         

@@ -52,7 +52,7 @@ response = requests.post(
 print(response.text)
 
 
-"""
+
 response = requests.post(
     "http://localhost:8080/seldon/default/serial-rpunct-ner/api/v1.0/predictions",
     headers={"Content-Type": "application/json"},
@@ -61,11 +61,10 @@ response = requests.post(
             "ndarray": 
                 [
 
-                        "hi my name is zachary brown and I work at balto software"   
+                        "hi my name is zak brown and I work at balto software"   
                 ]
             
         }
     },
 )
 print(response.text)
-"""
