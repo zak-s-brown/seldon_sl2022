@@ -50,3 +50,22 @@ response = requests.post(
     },
 )
 print(response.text)
+
+
+"""
+response = requests.post(
+    "http://localhost:8080/seldon/default/serial-rpunct-ner/api/v1.0/predictions",
+    headers={"Content-Type": "application/json"},
+    json={
+        "data": {
+            "ndarray": 
+                [
+
+                        "hi my name is zachary brown and I work at balto software"   
+                ]
+            
+        }
+    },
+)
+print(response.text)
+"""

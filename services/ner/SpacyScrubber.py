@@ -45,7 +45,10 @@ class SpacyScrubber():
         return res 
             
 
-    def predict(self, ndarray, feature_names):
+    def predict(self, ndarray, names=[], meta=[]):
+        logger.warning(ndarray)
+        logger.warning(meta)
+        logger.warning(names)
         text = str(ndarray[0])
         scrubbed = text
         ents = self.identify(text)

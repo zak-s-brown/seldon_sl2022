@@ -16,16 +16,16 @@ class RPunct():
 
     
     
-    def predict(self, ndarray, feature_names):
-        success = True
+    def predict(self, ndarray, names=[], meta=[]):
+        logger.warning(ndarray)
+        logger.warning(meta)
+        logger.warning(names)
         text = str(ndarray[0])
         try:
             punctuated = self.model.punctuate(text)
+            meta['punctuation_success'] = True
         except Exception as e:
-            success = False
+            meta['punctuation_success'] = False
             punctuated = text
-        return {
-            "punctuated": punctuated, 
-            "success": success
-        }
+        return [punctuated]
         

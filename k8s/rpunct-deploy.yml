@@ -34,3 +34,4 @@ spec:
       name: rpunct
       type: MODEL
     name: rpunct
+    replicas: 1

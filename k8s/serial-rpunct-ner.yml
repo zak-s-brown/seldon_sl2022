@@ -1,0 +1,27 @@
+apiVersion: machinelearning.seldon.io/v1alpha2
+kind: SeldonDeployment
+metadata:
+  name: serial-rpunct-ner
+spec:
+  name: serial-rpunct-ner
+  predictors:
+  - componentSpecs:
+    - spec:
+        containers:
+        - name: rpunct
+          image: localhost:5001/rpunct:latest
+        - name: ner
+          image: localhost:5001/ner:latest
+    graph:
+      name: rpunct
+      endpoint:
+        type: REST
+      type: MODEL
+      children:
+        - name: ner
+          endpoint:
+            type: REST
+          type: MODEL
+          children: []
+    name: serial-rpunct-ner
+    replicas: 1

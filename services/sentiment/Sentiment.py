@@ -79,7 +79,10 @@ class Sentiment():
         return res 
             
 
-    def predict(self, ndarray, feature_names):
+    def predict(self, ndarray, names=[], meta=[]):
+        logger.warning(ndarray)
+        logger.warning(meta)
+        logger.warning(names)
         text = str(ndarray[0])
         text = preprocess(text)
         encoded_input = self.tokenizer(text, return_tensors='pt')

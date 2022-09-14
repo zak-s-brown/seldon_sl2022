@@ -34,3 +34,4 @@ spec:
       name: sentiment
       type: MODEL
     name: sentiment
+    replicas: 1

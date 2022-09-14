@@ -34,3 +34,4 @@ spec:
       name: ner
       type: MODEL
     name: ner
+    replicas: 1
