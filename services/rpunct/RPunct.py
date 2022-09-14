@@ -1,5 +1,5 @@
-import spacy
 import logging
+from punctuate import RestorePuncts
 
 logger = logging.getLogger(__name__)
 
@@ -11,13 +11,21 @@ class RPunct():
 
     def load(self):
         logger.warning("Loading Model")
+        self.model = RestorePuncts(model_name='/app/model')
+        logger.warning("Model Loaded")
+
     
     
     def predict(self, ndarray, feature_names):
+        success = True
         text = str(ndarray[0])
-        punctuated = text
-        
+        try:
+            punctuated = self.model.punctuate(text)
+        except Exception as e:
+            success = False
+            punctuated = text
         return {
-            "punctuated": punctuated
+            "punctuated": punctuated, 
+            "success": success
         }
         

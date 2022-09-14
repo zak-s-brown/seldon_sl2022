@@ -34,3 +34,19 @@ response = requests.post(
     },
 )
 print(response.text)
+
+response = requests.post(
+    "http://localhost:8080/seldon/default/rpunct/api/v1.0/predictions",
+    headers={"Content-Type": "application/json"},
+    json={
+        "data": {
+            "ndarray": 
+                [
+
+                        "this is just some example text"   
+                ]
+            
+        }
+    },
+)
+print(response.text)
