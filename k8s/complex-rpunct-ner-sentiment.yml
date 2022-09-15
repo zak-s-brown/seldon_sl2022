@@ -1,0 +1,40 @@
+apiVersion: machinelearning.seldon.io/v1alpha2
+kind: SeldonDeployment
+metadata:
+  name: complex-rpunct-ner-sentiment
+spec:
+  name: complex-rpunct-ner-sentiment
+  predictors:
+  - componentSpecs:
+    - spec:
+        containers:
+        - name: rpunct
+          image: localhost:5001/rpunct:latest
+        - name: ner
+          image: localhost:5001/ner:latest
+        - name: sentiment
+          image: localhost:5001/sentiment:latest
+        - name: combiner
+          image: localhost:5001/combiner:latest            
+    graph:
+      name: combiner
+      endpoint:
+        type: REST
+      type: COMBINER
+      children:
+        - name: rpunct
+          endpoint:
+            type: REST
+          type: MODEL 
+          children:
+            - name: ner
+              endpoint:
+                type: REST
+              type: MODEL 
+        - name: sentiment
+          endpoint:
+            type: REST
+          type: MODEL
+          children: []
+    name: complex-rpunct-ner-sentiment
+    replicas: 1
