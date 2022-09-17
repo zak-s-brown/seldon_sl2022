@@ -92,8 +92,15 @@ build-service:
 	
 .PHONY: build-all
 build-all: 
-	echo "Building Service:" ner & \
-	bash build_service.sh ner
+	echo "Building Service:" ner && \
+	bash build_service.sh ner && \
+	echo "Building Service:" sentiment && \
+	bash build_service.sh sentiment && \
+	echo "Building Service:" rpunct && \
+	bash build_service.sh rpunct && \
+	echo "Building Service:" combiner && \
+	bash build_service.sh combiner && \
+	kubectl apply -f k8s/complex-rpunct-ner-sentiment.yml
 
 .PHONY: test
 test:

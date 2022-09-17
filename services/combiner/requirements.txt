@@ -1,0 +1,2 @@
+seldon-core==1.10.0
+Flask==2.1.0
