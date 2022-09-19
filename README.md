@@ -14,6 +14,3 @@ Setting up Seldon local development on kind
 - `make build-all` (build & deploy ner, sentiment, punct, and complex execution graph)
 - `make f` (establish port forward, `make kf` to terminate this background process)
 - `python test_request.py all` (test requests to all of the services, including complex execution graph) 
-
-## Prerequesites [DEPRECATED, installed via init]
-- Install [istioctl v1.14.1](https://istio.io/latest/docs/setup/getting-started/#download)
