@@ -4,6 +4,6 @@ spacy
 requests
 tqdm
 click
-transformers
+transformers==4.21.3
 scipy
 torch
