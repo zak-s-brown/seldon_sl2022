@@ -104,7 +104,7 @@ build-all:
 
 .PHONY: test
 test:
-	python test_request.py
+	python test_request.py $(service)
 
 .PHONY: clean
 clean:
