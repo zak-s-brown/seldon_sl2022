@@ -33,16 +33,16 @@ class Sentiment():
         self.TOKENIZER = os.environ.get('TOKENIZER', 'cardiffnlp/twitter-roberta-base-sentiment-latest')
         logger.warning(self.MODEL)
 
-        self.mapping_link = f"https://raw.githubusercontent.com/cardiffnlp/tweeteval/main/datasets/{self.task}/mapping.txt"
+        #self.mapping_link = f"https://raw.githubusercontent.com/cardiffnlp/tweeteval/main/datasets/{self.task}/mapping.txt"
 
     def load(self):
         logger.warning("loading model")
         # download label mapping
-        labels=[]
-        with urllib.request.urlopen(self.mapping_link) as f:
-            html = f.read().decode('utf-8').split("\n")
-            csvreader = csv.reader(html, delimiter='\t')
-        labels = [row[1] for row in csvreader if len(row) > 1]
+        #labels=[]
+        #with urllib.request.urlopen(self.mapping_link) as f:
+        #    html = f.read().decode('utf-8').split("\n")
+        #    csvreader = csv.reader(html, delimiter='\t')
+        #labels = [row[1] for row in csvreader if len(row) > 1]
 
         # PT
         self.model = AutoModelForSequenceClassification.from_pretrained(self.MODEL, local_files_only=True)
