@@ -9,7 +9,6 @@ class SpacyScrubber():
                  classes=['PERSON', 'ORG']
                 ): 
         
-        #self.nlp = spacy.load('en_core_web_md')
         self.classes = set(classes)
 
     def load(self):
@@ -17,8 +16,8 @@ class SpacyScrubber():
         self.nlp = spacy.load('en_core_web_md')
         
     def identify(self, text):
-        doc = self.nlp(text)
         
+        doc = self.nlp(text)
         output = []
         
         if doc.ents:

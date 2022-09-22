@@ -100,6 +100,7 @@ build-all:
 	bash build_service.sh rpunct && \
 	echo "Building Service:" combiner && \
 	bash build_service.sh combiner && \
+	kubectl apply -f k8s/serial-rpunct-ner.yml && \
 	kubectl apply -f k8s/complex-rpunct-ner-sentiment.yml
 
 .PHONY: test

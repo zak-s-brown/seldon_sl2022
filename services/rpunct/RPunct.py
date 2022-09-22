@@ -21,11 +21,12 @@ class RPunct():
         logger.warning(meta)
         logger.warning(names)
         text = str(ndarray[0])
+        
         try:
             punctuated = self.model.punctuate(text)
-            #meta['punctuation_success'] = True
+
         except Exception as e:
-            #meta['punctuation_success'] = False
             punctuated = text
+
         return [punctuated]
         

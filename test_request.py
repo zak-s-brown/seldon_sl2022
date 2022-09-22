@@ -15,7 +15,7 @@ if test_name in ('ner','all'):
                 "ndarray": 
                     [
 
-                            "Hi, my name is Zachary Brown and I work at Balto Software"   
+                            "hi my name is zak brown and i work at balto software"   
                     ]
                 
             }
@@ -49,7 +49,24 @@ if test_name in ('rpunct','all'):
                 "ndarray": 
                     [
 
-                            "this is just some example text"   
+                            "hi my name is zak brown and i work at balto software" 
+                    ]
+                
+            }
+        },
+    )
+    print(response.text)
+
+if test_name in ('serial','all'):
+    response = requests.post(
+        "http://localhost:8080/seldon/default/serial-rpunct-ner/api/v1.0/predictions",
+        headers={"Content-Type": "application/json"},
+        json={
+            "data": {
+                "ndarray": 
+                    [
+
+                            "hi my name is zak brown and I work at balto software"   
                     ]
                 
             }
